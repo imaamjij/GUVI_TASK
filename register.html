@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>R E G I S T E R</h1>
+      <form id="registerForm" action="php/register.php" method="post">
+        <label for="Name">Name:</label>
+        <input type="text" name="name" placeholder="Name" required><br>
+        <label for="Username">Username:</label>
+        <input type="text" name="username" placeholder="Username" required><br>
+        <label for="Email">Email:</label>
+        <input type="email" name="email" placeholder="Email address" required><br>
+        <label for="Password">Password:</label>
+        <input type="password" name="password" placeholder="Password" required><br>
+        <div class="submit">
+       <input type="submit" onclick="register()" value="Register">
+              <a href="login.html" target="_blank">Login Here</a>
+        </div>
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/register.js"></script>
+  </body>
+
+</html>
