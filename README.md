@@ -39,23 +39,23 @@ I have done the both front-end and back-end for the condition, but redis is not 
 Almost satisfied the condition given, in future i will definitely work for the requirements and satisfy the requirements.
 
 
-                                                        This is the sreenshot of Index page
+                                                     This is the sreenshot of Index page
 
 
 <img width="1280" alt="index" src="https://user-images.githubusercontent.com/58385239/223346789-a35d4b46-b06d-47f1-8c5b-29866d3daab8.png">
 
-                                                        This is the screenshot of Register page
+                                                     This is the screenshot of Register page
 
 
 <img width="1280" alt="register" src="https://user-images.githubusercontent.com/58385239/223346908-c9449668-867c-43fb-acb8-bc5fb8bbb42a.png">
 
-                                                        This is the screenshot of Login page
+                                                     This is the screenshot of Login page
 
 
 <img width="1280" alt="login" src="https://user-images.githubusercontent.com/58385239/223346996-25f9c8f5-e637-4587-987a-980946192571.png">
 
 
-                                                        This is the screenshot of Profile page
-
+                                                     This is the screenshot of Profile page
+                                                        
 
 <img width="1280" alt="profile" src="https://user-images.githubusercontent.com/58385239/223347063-51969c28-f9a0-473e-8034-ca13e42f3310.png">
