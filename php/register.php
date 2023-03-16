@@ -1,29 +1,34 @@
 <?php
 
-$name = $_POST['name'];
+// connect to Redis
+$redis = new Redis();
+$redis->connect('127.0.0.1', 6379);
+
+// connect to MongoDB
+$mongo = new MongoClient();
+$db = $mongo->selectDB("mydb");
+$collection = $db->selectCollection("users");
+
+// get username and password from POST
 $username = $_POST['username'];
-$password = $_POST['password'];
 $email = $_POST['email'];
+$password = $_POST['password'];
 
-$db_host = "localhost";
-$db_username = "root";
-$db_password = "";
-$db_name = "register";
+// hash the password
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-$conn = mysqli_connect($db_host, $db_username, $db_password, $db_name);
+// save the user in Redis
+$redis->set($username, $hashedPassword);
 
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
 
-$sql = "INSERT INTO users (name, username, password, email)
-VALUES ('$name', '$username', '$password', '$email')";
+// save the user in MongoDB
+$user = array("username" => $username);
+$collection->insert($user);
+$email = array("email" => $email);
+$collection->insert($email);
 
-if (mysqli_query($conn, $sql)) {
-  echo "New record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
+// redirect to the home page
+header("Location: index.html");
+exit;
 
-mysqli_close($conn);
 ?>

@@ -1,34 +1,37 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "profile";
+$client = new MongoClient();
+$redis = new Redis();
 
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if (!$client->connect() || !$redis->connect()) {
+    exit('Failed to connect to MongoDB or Redis.');
 }
 
-if(isset($_POST['name']) || isset($_POST['age']) || isset($_POST['dob']) || isset($_POST['contact']))
-{
-    $name = $_POST['name'];
-    $age = $_POST['age'];
-    $dob = $_POST['dob'];
-    $contact = $_POST['contact'];
-
-    $sql = "INSERT INTO profile (name, age, dob, contact)
-    VALUES ('$name', '$age', '$dob', '$contact')";
-
-    if (mysqli_query($conn, $sql)) 
-    {
-        echo "New record created successfully";
-    } else 
-    {
-        echo "Error: ". $sql .<br>  . mysqli_error($conn);
-    }
-
-    mysqli_close($conn);
+if (isset($_POST['save'])) {
+    $document = array(
+        'name' => $_POST['name'],
+        'dob' => $_POST['dob'],
+        'age' => $_POST['age'],
+        'contact' => $_POST['contact'],
+    );
+    $redis->set($_POST['name'], json_encode($document));
+    $client->selectDB('users')->selectCollection('profiles')->insert($document);
+    exit('Data saved successfully!');
 }
+
+$name = $_GET['name'];
+$document = $redis->get($name);
+if (!$document) {
+    $document = $client->selectDB('users')->selectCollection('profiles')->findOne(array('name' => $name));
+    $redis->set($name, json_encode($document));
+}
+
 ?>
+
+<form method="POST">
+    Name: <input type="text" name="name" value="<?php echo $document['name'] ?>" /><br />
+    Age: <input type="text" name="age" value="<?php echo $document['age'] ?>" /><br />
+    dob: <input type="text" name="dob" value="<?php echo $document['dob'] ?>" /><br />
+    contact: <input type="text" name="contact" value="<?php echo $document['contact'] ?>" /><br />
+    <input type="submit" name="save" value="Save" />
+</form>
